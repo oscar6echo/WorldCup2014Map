@@ -9,6 +9,8 @@ For each participant, the following information is displayed:
 
 Available [here](http://oscar6echo.github.io/WorldCup2014Map/).  
 
-Based on the [d3-geomap](http://component.kitchen/components/d3-geomap) web component and [this data](https://github.com/openfootball/world-cup/blob/master/2014--brazil/cup.txt).  
+Based on  
++ the [d3-geomap](http://component.kitchen/components/d3-geomap) web component
++ [open football worldcup data](https://github.com/openfootball/world-cup/blob/master/2014--brazil/cup.txt).  
 
 
