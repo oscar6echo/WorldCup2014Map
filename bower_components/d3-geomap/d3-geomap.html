@@ -132,7 +132,7 @@
 				data: self.data || {},
 				setProjection: projection,
 				geographyConfig: {
-					dataUrl: self.rootDirectory + '/datamaps/' + self.map + '.topo.json', //if not null, datamaps will fetch the map JSON (currently only supports topojson)
+					dataUrl: self.rootDirectory + 'datamaps/' + self.map + '.topo.json', //if not null, datamaps will fetch the map JSON (currently only supports topojson)
 					hideAntarctica: false,
 					borderWidth: self.theme.borderWidth || defaultTheme.borderWidth,
 					borderColor: self.theme.borderColor || defaultTheme.borderColor,
