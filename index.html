@@ -79,7 +79,8 @@
 		groupAll = [].concat(groupA, groupB, groupC, groupD, groupE, groupF, groupG, groupH)
 
 
-	var current_id;
+	var current_id,
+		clicked = false;
 
 	function changeSelection(b){
 		var arr = window[b.getAttribute('data')];
@@ -136,7 +137,10 @@
 		hoverTemplate: function(geography, data) { //this function should just return a string
 			console.log(geography.properties.name);
 			current_id = geography.id;
-			document.getElementById('info').innerHTML = display_info(geography.id);
+			if (clicked==false) {
+				document.getElementById('info').innerHTML = display_info(geography.id);
+			}
+			}
 			return '<div class="hoverinfo"><strong>' + geography.properties.name+' '+id_to_group(geography.id) + '</strong></div>';
 		}
 	}
@@ -149,10 +153,12 @@
 		});
 
 		document.addEventListener('clicked', function(e) {
+			clicked = true;
 			document.getElementById('info').innerHTML = '';
 			document.getElementById('info_clicked').innerHTML = display_info(current_id);
 
 			setTimeout(function(){
+				clicked = false;
 				document.getElementById('info_clicked').innerHTML = '';
 			},1000*2);
 		});
