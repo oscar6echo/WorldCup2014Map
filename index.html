@@ -52,6 +52,8 @@
 		<br/>
 		<br/>
 		<div id='info' style='text-align:center'></div>
+		<div id='info_clicked' style='text-align:center'></div>
+
 	</div>
 
 
@@ -66,93 +68,95 @@
 		groupG_info = '<table><tbody><tr><th>Group</th><th>Match No</th><th>Date</th><th>Time</th><th>Match</th><th>Location</th><th>Time Zone</th></tr><tr><td>G</td><td>13</td><td>Mon Jun/16</td><td>13:00</td><td>Germany - Portugal</td><td>Arena Fonte Nova, Salvador</td><td>UTC-3</td></tr><tr><td>G</td><td>14</td><td>Mon Jun/16</td><td>19:00</td><td>Ghana - United States</td><td>Estádio das Dunas, Natal</td><td>UTC-3</td></tr><tr><td>G</td><td>29</td><td>Sat Jun/21</td><td>16:00</td><td>Germany - Ghana</td><td>Fortaleza</td><td>UTC-3</td></tr><tr><td>G</td><td>30</td><td>Sun Jun/22</td><td>18:00</td><td>United States - Portugal</td><td>Manaus</td><td>UTC-4</td></tr><tr><td>G</td><td>45</td><td>Thu Jun/26</td><td>13:00</td><td>United States - Germany</td><td>Recife</td><td>UTC-3</td></tr><tr><td>G</td><td>46</td><td>Thu Jun/26</td><td>13:00</td><td>Portugal - Ghana</td><td>Brasília</td><td>UTC-3</td></tr></tbody></table>',
 		groupH_info = '<table><tbody><tr><th>Group</th><th>Match No</th><th>Date</th><th>Time</th><th>Match</th><th>Location</th><th>Time Zone</th></tr><tr><td>H</td><td>15</td><td>Tue Jun/17</td><td>13:00</td><td>Belgium - Algeria</td><td>Estádio Mineirão, Belo Horizonte</td><td>UTC-3</td></tr><tr><td>H</td><td>16</td><td>Tue Jun/17</td><td>18:00</td><td>Russia - South Korea</td><td>Arena Pantanal, Cuiabá</td><td>UTC-4</td></tr><tr><td>H</td><td>31</td><td>Sun Jun/22</td><td>13:00</td><td>Belgium - Russia</td><td>Rio de Janeiro</td><td>UTC-3</td></tr><tr><td>H</td><td>32</td><td>Sun Jun/22</td><td>16:00</td><td>South Korea - Algeria</td><td>Porto Alegre</td><td>UTC-3</td></tr><tr><td>H</td><td>47</td><td>Thu Jun/26</td><td>17:00</td><td>South Korea - Belgium</td><td>São Paulo</td><td>UTC-3</td></tr><tr><td>H</td><td>48</td><td>Thu Jun/26</td><td>17:00</td><td>Algeria - Russia</td><td>Curitiba</td><td>UTC-3</td></tr></tbody></table>';
 
+	var groupA = ['BRA','HRV','MEX','CMR'],	//Brasil, Croatia, Mexico, Cameroon
+		groupB = ['ESP','NLD','CHL','AUS'],	//Spain, Netherlands, Chile, Australia
+		groupC = ['COL','GRC','CIV','JPN'],	//Columbia, Greece, Côte d'Ivoire, Japan
+		groupD = ['URY','CRI','GBR','ITA'],		//Uruguay, Costa Rica, England, Italy
+		groupE = ['CHE','ECU','FRA','HND'],	//Switzerland, Ecuador, France, Honduras
+		groupF = ['ARG','BIH','IRN','NGA'],	//Argentina, Bosnia Herzegovina, Iran, Nigeria
+		groupG = ['DEU','PRT','GHA','USA'],	//Germany, Portugal, Ghana, USA
+		groupH = ['BEL','DZA','RUS','KOR'],	//Belgium, Algeria, Russia, Korea
+		groupAll = [].concat(groupA, groupB, groupC, groupD, groupE, groupF, groupG, groupH)
 
 
+	var current_id;
 
-		var groupA = ['BRA','HRV','MEX','CMR'],	//Brasil, Croatia, Mexico, Cameroon
-			groupB = ['ESP','NLD','CHL','AUS'],	//Spain, Netherlands, Chile, Australia
-			groupC = ['COL','GRC','CIV','JPN'],	//Columbia, Greece, Côte d'Ivoire, Japan
-			groupD = ['URY','CRI','GBR','ITA'],		//Uruguay, Costa Rica, England, Italy
-			groupE = ['CHE','ECU','FRA','HND'],	//Switzerland, Ecuador, France, Honduras
-			groupF = ['ARG','BIH','IRN','NGA'],	//Argentina, Bosnia Herzegovina, Iran, Nigeria
-			groupG = ['DEU','PRT','GHA','USA'],	//Germany, Portugal, Ghana, USA
-			groupH = ['BEL','DZA','RUS','KOR'],	//Belgium, Algeria, Russia, Korea
-			groupAll = [].concat(groupA, groupB, groupC, groupD, groupE, groupF, groupG, groupH)
+	function changeSelection(b){
+		var arr = window[b.getAttribute('data')];
+		var fill = b.style.backgroundColor;
 
-		function changeSelection(b){
-			var arr = window[b.getAttribute('data')];
-			var fill = b.style.backgroundColor;
-
-			function arrayToMap(arr, fill){
-				var r = [];
-				for(var i=0;i<arr.length;i++){
-					r[arr[i]] = fill;
-				}
-				return r;
+		function arrayToMap(arr, fill){
+			var r = [];
+			for(var i=0;i<arr.length;i++){
+				r[arr[i]] = fill;
 			}
-
-			var s = arrayToMap(arr,fill);
-			model.selected = s;
+			return r;
 		}
 
-		function id_to_group(id) {
-			if (groupA.indexOf(id) > -1) { return 'group A'; }
-			else if (groupB.indexOf(id) > -1) { return 'Group B'; }
-			else if (groupC.indexOf(id) > -1) { return 'Group C'; }
-			else if (groupD.indexOf(id) > -1) { return 'Group D'; }
-			else if (groupE.indexOf(id) > -1) { return 'Group E'; }
-			else if (groupF.indexOf(id) > -1) { return 'Group F'; }
-			else if (groupG.indexOf(id) > -1) { return 'Group G'; }
-			else if (groupH.indexOf(id) > -1) { return 'Group H'; }
-			else {return name+''; }
+		var s = arrayToMap(arr,fill);
+		model.selected = s;
+	}
+
+	function id_to_group(id) {
+		if (groupA.indexOf(id) > -1) { return 'group A'; }
+		else if (groupB.indexOf(id) > -1) { return 'Group B'; }
+		else if (groupC.indexOf(id) > -1) { return 'Group C'; }
+		else if (groupD.indexOf(id) > -1) { return 'Group D'; }
+		else if (groupE.indexOf(id) > -1) { return 'Group E'; }
+		else if (groupF.indexOf(id) > -1) { return 'Group F'; }
+		else if (groupG.indexOf(id) > -1) { return 'Group G'; }
+		else if (groupH.indexOf(id) > -1) { return 'Group H'; }
+		else {return name+''; }
+	}
+
+	function display_info (id) {
+		if (id_to_group(id)=='group A') { return groupA_info; }
+		else if (id_to_group(id)=='Group B') { return groupB_info; }
+		else if (id_to_group(id)=='Group C') { return groupC_info; }
+		else if (id_to_group(id)=='Group D') { return groupD_info; }
+		else if (id_to_group(id)=='Group E') { return groupE_info; }
+		else if (id_to_group(id)=='Group F') { return groupF_info; }
+		else if (id_to_group(id)=='Group G') { return groupG_info; }
+		else if (id_to_group(id)=='Group H') { return groupH_info; }
+		else { return ''; }
+	}
+
+	var model = {
+		selected: null,
+		theme: {
+			backgroundColor: '#f7fbff ',
+			defaultFill: '#9ecae1',
+			borderWidth: 0.5,
+			borderColor: '#000',
+			highlightFillColor: '#084594',
+			highlightBorderColor: '#000',
+			highlightBorderWidth: 0.5,
+			cursor: 'crosshair'
+		},
+		hoverTemplate: function(geography, data) { //this function should just return a string
+			console.log(geography.properties.name);
+			current_id = geography.id;
+			document.getElementById('info').innerHTML = display_info(geography.id);
+			return '<div class="hoverinfo"><strong>' + geography.properties.name+' '+id_to_group(geography.id) + '</strong></div>';
 		}
+	}
 
-		function display_info (id) {
-			if (id_to_group(id)=='group A') { return groupA_info; }
-			else if (id_to_group(id)=='Group B') { return groupB_info; }
-			else if (id_to_group(id)=='Group C') { return groupC_info; }
-			else if (id_to_group(id)=='Group D') { return groupD_info; }
-			else if (id_to_group(id)=='Group E') { return groupE_info; }
-			else if (id_to_group(id)=='Group F') { return groupF_info; }
-			else if (id_to_group(id)=='Group G') { return groupG_info; }
-			else if (id_to_group(id)=='Group H') { return groupH_info; }
-			else { return ''; }
-		}
+	window.addEventListener('polymer-ready', function(){
+		document.getElementById('example').model = model;
 
-		var model = {
-			selected: null,
-			theme: {
-				backgroundColor: '#f7fbff ',
-				defaultFill: '#9ecae1',
-				borderWidth: 0.5,
-				borderColor: '#000',
-				highlightFillColor: '#084594',
-				highlightBorderColor: '#000',
-				highlightBorderWidth: 0.5,
-				cursor: 'crosshair'
-			},
-			hoverTemplate: function(geography, data) { //this function should just return a string
-				console.log(geography.properties.name);
-				document.getElementById('info').innerHTML = display_info(geography.id);
-				return '<div class="hoverinfo"><strong>' + geography.properties.name+'  '+id_to_group(geography.id) + '</strong></div>';
-			}
-		}
-
-		window.addEventListener('polymer-ready', function(){
-			document.getElementById('example').model = model;
-
-			document.addEventListener('mouseout', function(e) {
-				document.getElementById('info').innerHTML = ''; }
-			)
-
-			document.addEventListener('clicked', function(e) {
-				document.getElementById('clicks').model = e.detail;
-				setTimeout(function(){
-					document.getElementById('clicks').model = null;
-				},1000);
-			});
-
+		document.addEventListener('mouseout', function(e) {
+			document.getElementById('info').innerHTML = '';
 		});
+
+		document.addEventListener('clicked', function(e) {
+			document.getElementById('info').innerHTML = '';
+			document.getElementById('info_clicked').innerHTML = display_info(current_id);
+
+			setTimeout(function(){
+				document.getElementById('info_clicked').innerHTML = '';
+			},1000*2);
+		});
+	});
 	</script>
 
 </body>
