@@ -136,6 +136,7 @@
 		},
 		hoverTemplate: function(geography, data) { //this function should just return a string
 			console.log(geography.properties.name);
+			console.log('clicked='+clicked);
 			current_id = geography.id;
 			if (clicked==false) {
 				document.getElementById('info').innerHTML = display_info(geography.id);
